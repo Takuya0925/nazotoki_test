@@ -21,8 +21,8 @@
       overflow: hidden;
     }
     #zoom-area {
-      width: 2000px;
-      height: 2000px;
+      width: 3000px;
+      height: 5000px;
       background: url('dragon1.png') no-repeat center center;
       background-size: cover;
       transform-origin: 0 0;
@@ -144,9 +144,9 @@
         orb.className = 'orb';
         let top, left;
         do {
-          top = Math.random() * (2000 - 16);
+          top = Math.random() * (5000 - 16);
         } while (top < 110);
-        left = Math.random() * (2000 - 16);
+        left = Math.random() * (3000 - 16);
         orb.style.top = top + 'px';
         orb.style.left = left + 'px';
         orb.addEventListener('click', () => {
