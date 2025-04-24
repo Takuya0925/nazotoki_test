@@ -1,11 +1,109 @@
+
 <!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="UTF-8" />
-    <title>導電性高分子ゲーム</title>
-  </head>
-  <body>
-    <h1>準備中！</h1>
-    <p>ここに導電性ドラゴンが現れる…</p>
-  </body>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>導電性高分子ドラゴン謎解き</title>
+  <style>
+    body {
+      margin: 0;
+      overflow: hidden;
+      font-family: sans-serif;
+      text-align: center;
+    }
+    #game-container {
+      position: relative;
+      width: 100vw;
+      height: 100vh;
+      background: url('dragon1.png') no-repeat center center;
+      background-size: cover;
+    }
+    .orb {
+      position: absolute;
+      width: 50px;
+      height: 50px;
+      background-color: rgba(255, 0, 255, 0.7);
+      border-radius: 50%;
+      cursor: pointer;
+    }
+    #overlay {
+      position: absolute;
+      top: 10px;
+      left: 0;
+      right: 0;
+      color: white;
+      font-size: 1.5rem;
+      text-shadow: 1px 1px 4px black;
+    }
+    #retry-btn {
+      display: none;
+      margin-top: 20px;
+      padding: 12px 20px;
+      font-size: 1.2rem;
+    }
+  </style>
+</head>
+<body>
+  <div id="game-container">
+    <div id="overlay">
+      <div id="message">10秒以内に10個のオーブを見つけてタップしろ！</div>
+      <div id="timer">残り時間: 10秒</div>
+      <div id="result"></div>
+      <button id="retry-btn" onclick="startGame()">リトライ</button>
+    </div>
+  </div>
+
+  <script>
+    const gameContainer = document.getElementById('game-container');
+    const message = document.getElementById('message');
+    const timerDisplay = document.getElementById('timer');
+    const result = document.getElementById('result');
+    const retryBtn = document.getElementById('retry-btn');
+
+    let countdown, orbs = [], timeLeft = 10, tappedCount = 0;
+
+    function startGame() {
+      message.textContent = '10秒以内に10個のオーブを見つけてタップしろ！';
+      retryBtn.style.display = 'none';
+      result.textContent = '';
+      timeLeft = 10;
+      tappedCount = 0;
+      orbs.forEach(orb => orb.remove());
+      orbs = [];
+
+      for (let i = 0; i < 10; i++) {
+        const orb = document.createElement('div');
+        orb.className = 'orb';
+        orb.style.top = Math.random() * (window.innerHeight - 60) + 'px';
+        orb.style.left = Math.random() * (window.innerWidth - 60) + 'px';
+        orb.addEventListener('click', () => {
+          orb.remove();
+          tappedCount++;
+          if (tappedCount === 10) {
+            clearInterval(countdown);
+            result.textContent = 'クリア！キーワードは「PEDOT」だ！';
+            retryBtn.style.display = 'none';
+          }
+        });
+        gameContainer.appendChild(orb);
+        orbs.push(orb);
+      }
+
+      countdown = setInterval(() => {
+        timeLeft--;
+        timerDisplay.textContent = `残り時間: ${timeLeft}秒`;
+        if (timeLeft <= 0) {
+          clearInterval(countdown);
+          if (tappedCount < 10) {
+            result.textContent = `失敗！${tappedCount}個しか見つけられなかった…`;
+            retryBtn.style.display = 'inline-block';
+          }
+        }
+      }, 1000);
+    }
+
+    window.onload = startGame;
+  </script>
+</body>
 </html>
