@@ -28,8 +28,8 @@
     }
     .orb {
       position: absolute;
-      width: 50px;
-      height: 50px;
+      width: 40px;
+      height: 40px;
       background-color: rgba(255, 0, 255, 0.7);
       border-radius: 50%;
       cursor: pointer;
@@ -81,7 +81,7 @@
       <button id="retry-btn" onclick="startGame()">リトライ</button>
     </div>
     <div id="start-screen">
-      <h1>導電性ドラゴン謎解き</h1>
+      <h2>制限時間内にオーブを10個タップしろ！</h2>
       <button id="start-btn" onclick="initGame()">スタート</button>
     </div>
   </div>
@@ -112,8 +112,8 @@
       for (let i = 0; i < 10; i++) {
         const orb = document.createElement('div');
         orb.className = 'orb';
-        orb.style.top = Math.random() * (window.innerHeight - 60) + 'px';
-        orb.style.left = Math.random() * (window.innerWidth - 60) + 'px';
+        orb.style.top = Math.random() * (window.innerHeight - 50) + 'px';
+        orb.style.left = Math.random() * (window.innerWidth - 50) + 'px';
         orb.addEventListener('click', () => {
           orb.remove();
           tappedCount++;
